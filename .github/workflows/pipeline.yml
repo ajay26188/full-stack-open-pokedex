@@ -14,10 +14,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Directory content
+        run : |
+              ls -l
       - name: Install dependencies 
         run: npm install  
       - name: Check style
         run: npm run eslint
-      - name: Directory content
-        run : |
-            ls -l
+      
