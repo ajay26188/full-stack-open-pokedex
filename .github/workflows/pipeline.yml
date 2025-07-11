@@ -12,11 +12,17 @@ jobs:
 
   simple_deployment_pipeline:
     runs-on: ubuntu-22.04
+    outputs:
+      commit_msg: ${{ steps.check_skip.outputs.commit_msg }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Check commit message
+        id: check_skip
+        run: |
+          echo "commit_msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
       - name: Directory content
         run : |
               ls -l
@@ -29,7 +35,7 @@ jobs:
       - name: test
         run: npm run test
       - name: deploy
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && !contains(steps.check_skip.outputs.commit_msg, '#skip') }}
         uses: sws2apps/render-deployment@main
         with:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}
@@ -38,7 +44,7 @@ jobs:
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-22.04
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && !contains(needs.simple_deployment_pipeline.outputs.commit_msg, '#skip') }}
     steps:
       - uses: actions/checkout@v4
       - name: Bump version and push tag
