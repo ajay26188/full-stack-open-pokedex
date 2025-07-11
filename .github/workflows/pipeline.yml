@@ -25,4 +25,10 @@ jobs:
         run: npm run build
       - name: test
         run: npm run test
+      - name: deploy
+        uses: sws2apps/render-deployment@main
+        with:
+          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
+          apiKey: ${{ secrets.RENDER_API_KEY }}
+          multipleDeployment: false
       
