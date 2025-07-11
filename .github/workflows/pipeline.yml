@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
 
 jobs:
 
@@ -26,6 +29,7 @@ jobs:
       - name: test
         run: npm run test
       - name: deploy
+        if: ${{ github.event_name == 'push' }}
         uses: sws2apps/render-deployment@main
         with:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}
