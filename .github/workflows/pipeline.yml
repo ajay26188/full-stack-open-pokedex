@@ -68,6 +68,7 @@ jobs:
             https://full-stack-open-pokedex-8mew.onrender.com
 
   notify_failure:
+    needs: [simple_deployment_pipeline]
     if: ${{ failure() && github.event_name == 'push' }}
     runs-on: ubuntu-22.04
     steps:
