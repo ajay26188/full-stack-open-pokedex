@@ -41,6 +41,7 @@ jobs:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}
           apiKey: ${{ secrets.RENDER_API_KEY }}
           multipleDeployment: false
+
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-22.04
@@ -52,4 +53,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+
+  notify_success:
+    needs: [tag_release]
+    if: ${{ success() && github.event_name == 'push' }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Notify Discord of success
+        uses: rjstone/discord-webhook-notify@v2
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: | 
+            Deployment successful for commit: ${{ github.sha }}"
+            https://full-stack-open-pokedex-8mew.onrender.com
+
+
+          
       
