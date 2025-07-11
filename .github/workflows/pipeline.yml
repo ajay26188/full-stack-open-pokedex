@@ -35,4 +35,14 @@ jobs:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}
           apiKey: ${{ secrets.RENDER_API_KEY }}
           multipleDeployment: false
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-22.04
+    if: ${{ github.event_name == 'push' }}
+    steps:
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.73.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: true
       
