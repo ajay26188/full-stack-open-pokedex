@@ -63,7 +63,7 @@ jobs:
         uses: rjstone/discord-webhook-notify@v2
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          message: | 
+          description: | 
             Deployment successful for commit: ${{ github.sha }}"
             https://full-stack-open-pokedex-8mew.onrender.com
 
@@ -75,7 +75,7 @@ jobs:
       uses: rjstone/discord-webhook-notify@v2
       with:
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-        message: |
+        description: |
           Build failed!
           Commit: ${{ github.event.head_commit.url }}
           Message: ${{ github.event.head_commit.message }}
