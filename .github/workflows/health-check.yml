@@ -2,9 +2,8 @@ name: Periodic Health Check
 
 on:
   schedule:
-    - cron: '0 * * * *' # every hour (i will change this later to daily)
+    - cron: '0 7 * * *' # every 7 days at 7 AM
   workflow_dispatch: # allows manual runs from GitHub UI
-  push:              # TEMP: so you can test it right away (remove later)
 
 jobs:
   health_check:
