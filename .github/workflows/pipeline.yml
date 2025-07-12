@@ -60,10 +60,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Notify Discord of success
-        uses: rjstone/discord-webhook-notify@v2
+        uses: Ilshidur/action-discord@master
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          description: | 
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: | 
             Deployment successful for commit: ${{ github.sha }}"
             https://full-stack-open-pokedex-8mew.onrender.com
 
@@ -73,10 +73,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Notify Discord of failure
-      uses: rjstone/discord-webhook-notify@v2
+      uses: Ilshidur/action-discord@master
       with:
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-        description: |
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        message: |
           Build failed!
           Commit: ${{ github.event.head_commit.url }}
           Message: ${{ github.event.head_commit.message }}
