@@ -65,8 +65,9 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           args: | 
-            Deployment successful for commit: ${{ github.sha }}"
-            https://full-stack-open-pokedex-8mew.onrender.com
+            Deployment successful for commit: ${{ github.sha }} by ${{ github.event.head_commit.author.name }}
+            Live site: https://full-stack-open-pokedex-8mew.onrender.com
+          
 
   notify_failure:
     needs: [simple_deployment_pipeline]
