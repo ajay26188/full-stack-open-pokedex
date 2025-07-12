@@ -1,0 +1,20 @@
+name: Periodic Health Check
+
+on:
+  schedule:
+    - cron: '0 * * * *' # every hour (i will change this later to daily)
+  workflow_dispatch: # allows manual runs from GitHub UI
+  push:              # TEMP: so you can test it right away (remove later)
+
+jobs:
+  health_check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check deployment health
+        uses: jtalk/url-health-check-action@v3
+        with:
+          url: https://full-stack-open-pokedex-8mew.onrender.com
+          follow-redirect: true
+          max-attempts: 3
+          retry-delay: 10s
+          retry-all: true
