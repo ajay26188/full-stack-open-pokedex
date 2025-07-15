@@ -22,7 +22,6 @@ jobs:
       - name: Check commit message
         id: check_skip
         run: |
-          COMMIT_MSG=$(git log -1 --pretty=%B | tr -d '\n' | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g')
           echo "commit_msg=$COMMIT_MSG" >> $GITHUB_OUTPUT
       - name: Directory content
         run : |
